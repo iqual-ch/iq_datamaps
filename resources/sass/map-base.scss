@@ -1,0 +1,20 @@
+// Definitions
+:root {
+  --map-color: #ddd;
+  --map-color-active: #333;
+  --map-color-border: #fff;
+
+  --map-tooltip-color: #fff;
+  --map-tooltip-border: #eee;
+}
+
+// Tooltip styling
+.map-tooltip{
+  padding: 10px 15px;
+  background: var(--map-tooltip-color);
+  border: 1px solid var(--map-tooltip-border);
+  font-size: 14px;
+  > :last-child{
+    margin-bottom: 0;
+  }
+}

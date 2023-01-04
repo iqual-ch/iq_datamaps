@@ -1,0 +1,9 @@
+datamaps_base:
+  js:
+    //d3js.org/d3.v3.min.js: {external: true, minified: true}
+    //d3js.org/topojson.v1.min.js: {external: true, minified: true}
+    //datamaps.github.io/scripts/datamaps.world.min.js?v=1: {external: true, minified: true}
+    resources/js/map-interface.js: {}
+  css:
+    layout:
+      resources/css/map-base.css: {minified: false}
