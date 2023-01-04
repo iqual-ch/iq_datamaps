@@ -1,65 +1,67 @@
-# iq_faq
 
-
-FAQ module for pagedesigner.
-
+# iq_datamaps
+  
+A basic wrapper for Map Integrations using [DataMaps](http://datamaps.github.io/).
+  
 
 ## Background
-Setting up FAQ pages is very time-consuming, especially if they have to comply with schma.org standards. Another problem is the fact that we often have different pages showing the same question, which leads to unnecessary redundancies.
 
-The purpose of this module is to solve both problems by
-1. Introducing an FAQ pattern that automatically adds the question and answer to the schema.org metatags
-2. Introducing an FAQ node type multiple several view blocks available in Pagedesigner:
-	- **Manual selection**: Manually choose Questions (todo: multiple choice)
-	- **Manual topic selection**: Manually choose topics as filter criteria
-	- **Automatic topic selection**: Use the page's topics as fiter criteria
+Every now and then, we need to implement some sort of map functionality that cannot be achieved using Google maps. DataMaps provides a powerfull, highly customizable framework for any kind of map functionalities. The purpous of this module is to provide a basic wrapper to easily integrate DataMaps into web projects. 
 
-## Setup & Installation
-Install module
+## Usage
 
-    composer require iqual/iq_faq
-    drush en iq_faq
+The modul provides a Drupal library containing all necessary assets:
 
+    iq_datamaps/datamaps_base
+It can be attached like any other drupal library. Besided the DataMaps distribution it contains very basic map and tooltip styling and a JS class to interact with DataMaps JS: `iqDataMapsWrapper`.
+  
+### The iqDataMapsWrapper Class
+Create a new JS object from the iqDataMapsWrapper class:
 
-Compile CSS
+    let mapObject = new iqDataMapsWrapper(element);
+element: DOM Container element that will hold the map.
 
-    drush iq_barrio_helper:sass-compile
+The `iqDataMapsWrapper` provides a set of base settings for DataMaps to print a basic world map and the following methods:
 
 
-Apply «Change pivot» patch:
+##  clearSettings() 
+Removes all base settings. DataMap's defaults are now applied.
 
-     cp public/modules/custom/iq_faq/patches/20191126_change-pivot_schema-metatag.patch patches/20191126_change-pivot_schema-metatag.patch
-     composer patch-add drupal/schema_metatag 'Change pivot' patches/20191126_change-pivot_schema-metatag.patch
-
-This patch changes delimiters for questions and answers to two colons (::) instead of one comma (,).
+**Kind**: public function
 
 
+##  clearSettings() 
+Removes all base settings. DataMap's defaults are now applied.
 
-Apply «Allow html in tags (schema metatag)» patch:
+**Kind**: public function
 
-     cp public/modules/custom/iq_metatag_extension/patches/20191023_html-in-tags_schema-metatag.patch patches/20191023_html-in-tags_schema-metatag.patch
-     composer patch-add drupal/schema_metatag 'Allow html in tags (schema metatag)' patches/20191023_html-in-tags_schema-metatag.patch
+##  restoreBaseSettings() 
+Restores base settings.
 
-Apply «Allow html in tags (metatag)» patch:
+**Kind**: public function
 
-     cp public/modules/custom/iq_metatag_extension/patches/20200331_html-in-tags_metatag.patch patches/20200331_html-in-tags_metatag.patch
-     composer patch-add drupal/metatag 'Allow html in tags (metatag)' patches/20200331_html-in-tags_metatag.patch
+##  setScope(scope) 
+Restores base settings.
 
-These patches make it possible to use HTML in the meta tags
-
-
-
-If needed:
-- Add iq_topics taxonomy field to content types to enable automatic topic selection.
-- Add FAQ as filterable content type in content view
+**Kind**: public function
+| Param  | Type                | Description  |
+| ------ | ------------------- | ------------ |
+| scope  | <code>string</code> | 3-digit country code of scope. |
 
 
-## Expected outcome
+##  initMap(scope) ⇒ <code>DataMaps Object</code>
+Prints a map with a given set of custom settings.
 
-After the installation there should be:
+**Kind**: public function
+| Param  | Type                | Description  |
+| ------ | ------------------- | ------------ |
+| settings  | <code>Object</code> | Custom DataMaps settings. |
 
-- Pattern *iq_faq - FAQ Item* available as pagedesigner component
-- New content type FAQ
-- 3 FAQ View blocks available as pagedesigner components
 
-Whenever an FAQ pattern is rendered on a page, its content (question & answer) should be added to the page's metadata.
+##  initMap(scope) ⇒ <code>DataMaps Object</code>
+Uses `initMap()` to print a responsive map with a given set of custom settings.
+
+**Kind**: public function
+| Param  | Type                | Description  |
+| ------ | ------------------- | ------------ |
+| settings  | <code>Object</code> | Custom DataMaps settings. |
