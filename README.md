@@ -1,4 +1,5 @@
 
+
 # iq_datamaps
   
 A basic wrapper for Map Integrations using [DataMaps](http://datamaps.github.io/).
@@ -65,3 +66,70 @@ Uses `initMap()` to print a responsive map with a given set of custom settings.
 | Param  | Type                | Description  |
 | ------ | ------------------- | ------------ |
 | settings  | <code>Object</code> | Custom DataMaps settings. |
+
+
+## Use-cases / examples
+
+Print a (responsive) world map:
+
+    let element = document.getElementById('map-wrapper');
+    let dataMap = new  iqDataMapsWrapper(element);
+    dataMap.initResponsiveMap();
+
+Highlight countries on world map:
+
+    let element = document.getElementById('map-wrapper');
+    let dataMap = new  iqDataMapsWrapper(element);
+    let highlights = {
+      'CHE': {fillKey:  'active'},
+    }
+    dataMap.initResponsiveMap({data:  highlights});
+
+Print a swiss map
+
+    let element = document.getElementById('map-wrapper');
+    let dataMap = new  iqDataMapsWrapper(element);
+    dataMap.setScope('che');
+    dataMap.initResponsiveMap({
+      setProjection:  function (element) {
+        let  scaleFactor = element.offsetWidth * 12.5;
+        var  projection = d3.geo.mercator()
+          .center([8.2, 46.8182])
+          .scale(scaleFactor)
+          .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+        var  path = d3.geo.path().projection(projection);
+        return { path:  path, projection:  projection };
+      }
+    });
+
+Print a swiss map with markers
+
+    let element = document.getElementById('map-wrapper');
+    let dataMap = new  iqDataMapsWrapper(element);
+    let mapMarkers = [
+      {
+        'radius': 5,
+        'latitude': 46.9376,
+        'longitude': 7.3950,
+        'tooltip_content':  "<strong>Oh, hi Marc!</strong>",
+        'fillKey': 'active'
+      }
+    ];
+    dataMap.setScope('che');
+    dataMap.initResponsiveMap({
+      setProjection:  function (element) {
+        let  scaleFactor = element.offsetWidth * 12.5;
+        var  projection = d3.geo.mercator()
+          .center([8.2, 46.8182])
+          .scale(scaleFactor)
+          .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+        var  path = d3.geo.path().projection(projection);
+        return { path:  path, projection:  projection };
+      }
+    }).bubbles(mapMarkers, {
+      popupTemplate:  function (geo, data) {
+        return  '<div class="map-tooltip">' + data.tooltip_content + '</div>';
+      },
+      highlightFillColor:  'var(--map-color-active)',
+      highlightBorderColor:  'var(--map-color-active)',
+    });
