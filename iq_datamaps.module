@@ -12,7 +12,7 @@ function iq_datamaps_page_attachments(array &$page) {
 
   // Getting the current front path.
   $page['#attached']['drupalSettings']['iq_datamaps'] = [
-    'data_url_base' => \Drupal::service('extension.list.module')->getPath('iq_datamaps') . '/resources/geodata/',
+    'data_url_base' => '/' . \Drupal::service('extension.list.module')->getPath('iq_datamaps') . '/resources/geodata/',
   ];
 
 }
